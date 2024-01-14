@@ -12,12 +12,16 @@ class SelectedImage with ChangeNotifier {
   Uint8List? _bytesFromPicker;
   Uint8List? get bytesFromPicker => _bytesFromPicker;
 
+  Uint8List? _modifiedBytes;
+  Uint8List? get modifiedBytes => _modifiedBytes;
+
   PageType _pageType = PageType.none;
   PageType get pageType => _pageType;
 
   Future<void> pickImageFromBytes() async {
     _bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
-    // _image = Image.memory(_bytesFromPicker!);
+    _modifiedBytes = _bytesFromPicker;
+    imageResize(300);
     setPageType(PageType.none);
     notifyListeners();
   }
@@ -29,7 +33,8 @@ class SelectedImage with ChangeNotifier {
 
   void setBytesFromPicker(Uint8List bytesFromPicker) {
     _bytesFromPicker = bytesFromPicker;
-    // _image = Image.memory(_bytesFromPicker!);
+    _modifiedBytes = _bytesFromPicker;
+    imageResize(300);
     setPageType(PageType.none);
     notifyListeners();
   }
@@ -55,9 +60,11 @@ class SelectedImage with ChangeNotifier {
 
   void imageResize(int width) {
     img.Image currentImage = img.decodeImage(bytesFromPicker!)!;
-    img.copyResize(currentImage, width: width);
-    Uint8List resultBytes = Uint8List.fromList(img.encodePng(currentImage));
-    setBytesFromPicker(resultBytes);
+    var modifiedImage = img.copyResize(currentImage, width: width);
+    Uint8List resultBytes = Uint8List.fromList(
+        img.encodePng(img.copyResize(modifiedImage, width: width)));
+    _modifiedBytes = resultBytes;
+    notifyListeners();
   }
 
   Future<void> downloadImage() async {

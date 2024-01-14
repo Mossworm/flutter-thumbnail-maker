@@ -207,7 +207,7 @@ class SelectedIconPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Image.memory(context.watch<SelectedImage>().bytesFromPicker!),
+      child: Image.memory(context.watch<SelectedImage>().modifiedBytes!),
     );
   }
 }
@@ -351,7 +351,7 @@ class SettingWidget extends StatefulWidget {
 }
 
 class _SettingWidgetState extends State<SettingWidget> {
-  double currentValue = 0.0;
+  double currentValue = 300.0;
 
   @override
   Widget build(BuildContext context) {
@@ -371,12 +371,36 @@ class _SettingWidgetState extends State<SettingWidget> {
           ),
         ],
       ),
-      child: Slider(
-          value: currentValue,
-          max: 1000,
-          onChanged: (value) => setState(() {
-                currentValue = value;
-              })),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Slider(
+              value: currentValue,
+              max: 1000,
+              onChanged: (value) => setState(() {
+                    currentValue = value;
+                  })),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    context
+                        .read<SelectedImage>()
+                        .imageResize(currentValue.toInt());
+                  },
+                  child: Text('적용', style: TextStyle(fontSize: 30))),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      currentValue = 300;
+                    });
+                  },
+                  child: Text('기본값', style: TextStyle(fontSize: 30))),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
