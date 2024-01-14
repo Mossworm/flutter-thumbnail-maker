@@ -59,6 +59,7 @@ class MyHomePage extends StatelessWidget {
                             padding: EdgeInsets.all(40.0),
                             child: GenerateThumbnailWidget(),
                           ),
+                          SettingWidget(),
                         ],
                       ),
                     ),
@@ -338,6 +339,44 @@ class _GetImageWidgetState extends State<GetImageWidget> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class SettingWidget extends StatefulWidget {
+  const SettingWidget({super.key});
+
+  @override
+  State<SettingWidget> createState() => _SettingWidgetState();
+}
+
+class _SettingWidgetState extends State<SettingWidget> {
+  double currentValue = 0.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(
+        maxWidth: 700,
+        maxHeight: 200,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Slider(
+          value: currentValue,
+          max: 1000,
+          onChanged: (value) => setState(() {
+                currentValue = value;
+              })),
     );
   }
 }

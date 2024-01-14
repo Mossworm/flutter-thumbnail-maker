@@ -35,8 +35,8 @@ class SelectedImage with ChangeNotifier {
   }
 
   Uint8List generateCompositeImage(Uint8List selectedImage) {
-    final int targetWidth = 1280;
-    final int targetHeight = 720;
+    const int targetWidth = 1280;
+    const int targetHeight = 720;
 
     img.Image background = img.Image(width: targetWidth, height: targetHeight);
     img.fill(background, color: img.ColorRgb8(255, 255, 255));
@@ -51,6 +51,13 @@ class SelectedImage with ChangeNotifier {
     Uint8List resultBytes = Uint8List.fromList(img.encodePng(background));
 
     return resultBytes;
+  }
+
+  void imageResize(int width) {
+    img.Image currentImage = img.decodeImage(bytesFromPicker!)!;
+    img.copyResize(currentImage, width: width);
+    Uint8List resultBytes = Uint8List.fromList(img.encodePng(currentImage));
+    setBytesFromPicker(resultBytes);
   }
 
   Future<void> downloadImage() async {
