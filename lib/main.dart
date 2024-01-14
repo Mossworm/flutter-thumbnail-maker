@@ -412,10 +412,9 @@ class _SettingWidgetState extends State<SettingWidget> {
                             ElevatedButton(
                               child: const Text('Got it'),
                               onPressed: () {
-                                setState(() => currentColor = pickerColor);
-                                context
-                                    .read<SelectedImage>()
-                                    .setBackgroundColor(currentColor);
+                                setState(() {
+                                  currentColor = pickerColor;
+                                });
                                 Navigator.of(context).pop();
                               },
                             ),
@@ -424,21 +423,24 @@ class _SettingWidgetState extends State<SettingWidget> {
                       },
                     );
                   },
-                  child: Text('배경색 설정', style: TextStyle(fontSize: 30))),
+                  child: const Text('배경색 설정', style: TextStyle(fontSize: 30))),
               ElevatedButton(
                   onPressed: () {
                     setState(() {
                       currentValue = 300;
                     });
                   },
-                  child: Text('기본값', style: TextStyle(fontSize: 30))),
+                  child: const Text('기본값', style: TextStyle(fontSize: 30))),
               ElevatedButton(
                   onPressed: () {
                     context
                         .read<SelectedImage>()
+                        .setBackgroundColor(currentColor);
+                    context
+                        .read<SelectedImage>()
                         .imageResize(currentValue.toInt());
                   },
-                  child: Text('적용', style: TextStyle(fontSize: 30))),
+                  child: const Text('적용', style: TextStyle(fontSize: 30))),
             ],
           ),
         ],

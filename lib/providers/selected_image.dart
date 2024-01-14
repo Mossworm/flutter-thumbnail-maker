@@ -49,12 +49,13 @@ class SelectedImage with ChangeNotifier {
   }
 
   Uint8List generateCompositeImage(Uint8List selectedImage) {
+    print('병합시 백그라운드 컬러: $backgroundColor');
+
     const int targetWidth = 1280;
     const int targetHeight = 720;
 
     img.Image background = img.Image(width: targetWidth, height: targetHeight);
     img.fill(background, color: backgroundColor);
-    print('병합시 백그라운드 컬러: $backgroundColor');
 
     img.Image overlayImage = img.decodeImage(selectedImage)!;
 
