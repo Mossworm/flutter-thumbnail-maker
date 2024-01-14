@@ -358,6 +358,14 @@ class SettingWidget extends StatefulWidget {
 class _SettingWidgetState extends State<SettingWidget> {
   double currentValue = 300.0;
 
+  Color pickerColor = Color.fromARGB(255, 255, 255, 255);
+  Color currentColor = Color.fromARGB(255, 255, 255, 255);
+
+  // ValueChanged<Color> callback
+  void changeColor(Color color) {
+    setState(() => pickerColor = color);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -381,7 +389,7 @@ class _SettingWidgetState extends State<SettingWidget> {
         children: [
           Slider(
               value: currentValue,
-              max: 1000,
+              max: 600,
               onChanged: (value) => setState(() {
                     currentValue = value;
                   })),
@@ -390,46 +398,29 @@ class _SettingWidgetState extends State<SettingWidget> {
             children: [
               ElevatedButton(
                   onPressed: () {
-                    // context
-                    //     .read<SelectedImage>()
-                    //     .setBackgroundColor(Colors.grey);
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                            title: const Text('색상 선택'),
-                            content: SingleChildScrollView(
-                              child: BlockPicker(
-                                pickerColor: Color.fromRGBO(
-                                    context
-                                        .watch<SelectedImage>()
-                                        .backgroundColor
-                                        .r
-                                        .toInt(),
-                                    context
-                                        .watch<SelectedImage>()
-                                        .backgroundColor
-                                        .g
-                                        .toInt(),
-                                    context
-                                        .watch<SelectedImage>()
-                                        .backgroundColor
-                                        .b
-                                        .toInt(),
-                                    1),
-                                onColorChanged: (pickerColor) {
-                                  print('pickerColor: $pickerColor');
-                                },
-                              ),
+                          title: const Text('색상 선택'),
+                          content: SingleChildScrollView(
+                              child: ColorPicker(
+                            pickerColor: pickerColor,
+                            onColorChanged: changeColor,
+                          )),
+                          actions: <Widget>[
+                            ElevatedButton(
+                              child: const Text('Got it'),
+                              onPressed: () {
+                                setState(() => currentColor = pickerColor);
+                                context
+                                    .read<SelectedImage>()
+                                    .setBackgroundColor(currentColor);
+                                Navigator.of(context).pop();
+                              },
                             ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text('닫기'),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ]);
+                          ],
+                        );
                       },
                     );
                   },

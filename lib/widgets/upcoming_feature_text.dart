@@ -52,6 +52,17 @@ class UpcomingFeaturesTextWidget extends StatelessWidget {
                 Icon(Icons.check_box_outline_blank,
                     size: 30, color: Colors.grey),
                 SizedBox(width: 10),
+                Text('Add Text',
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.check_box_outline_blank,
+                    size: 30, color: Colors.grey),
+                SizedBox(width: 10),
                 Text('Can setting resolution & layout',
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),

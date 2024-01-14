@@ -23,6 +23,7 @@ class SelectedImage with ChangeNotifier {
 
   void setBackgroundColor(Color color) {
     _backgroundColor = img.ColorRgb8(color.red, color.green, color.blue);
+    print(_backgroundColor);
     notifyListeners();
   }
 
@@ -53,6 +54,7 @@ class SelectedImage with ChangeNotifier {
 
     img.Image background = img.Image(width: targetWidth, height: targetHeight);
     img.fill(background, color: backgroundColor);
+    print('병합시 백그라운드 컬러: $backgroundColor');
 
     img.Image overlayImage = img.decodeImage(selectedImage)!;
 
