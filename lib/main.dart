@@ -106,8 +106,8 @@ class _GenerateThumbnailWidgetState extends State<GenerateThumbnailWidget> {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
-        maxWidth: 600,
-        maxHeight: 500,
+        maxWidth: 1280,
+        maxHeight: 720,
       ),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -166,8 +166,7 @@ class GenerateButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        //TODO: context.watch<SelectedImage>().image 의 이미지를 화면중앙에 놓고 1280x720 크기의 흰색 배경화면을 만들어서 이미지를 합성한후 다운로드 하는 기능
-        context.read<SelectedImage>().downloadImage(context);
+        context.read<SelectedImage>().downloadImage();
       },
       child: const Text('Generate',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
