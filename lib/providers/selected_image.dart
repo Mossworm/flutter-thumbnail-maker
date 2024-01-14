@@ -18,6 +18,14 @@ class SelectedImage with ChangeNotifier {
   PageType _pageType = PageType.none;
   PageType get pageType => _pageType;
 
+  img.ColorRgb8 _backgroundColor = img.ColorRgb8(255, 255, 255);
+  img.ColorRgb8 get backgroundColor => _backgroundColor;
+
+  void setBackgroundColor(Color color) {
+    _backgroundColor = img.ColorRgb8(color.red, color.green, color.blue);
+    notifyListeners();
+  }
+
   Future<void> pickImageFromBytes() async {
     _bytesFromPicker = await ImagePickerWeb.getImageAsBytes();
     _modifiedBytes = _bytesFromPicker;
@@ -44,7 +52,7 @@ class SelectedImage with ChangeNotifier {
     const int targetHeight = 720;
 
     img.Image background = img.Image(width: targetWidth, height: targetHeight);
-    img.fill(background, color: img.ColorRgb8(255, 255, 255));
+    img.fill(background, color: backgroundColor);
 
     img.Image overlayImage = img.decodeImage(selectedImage)!;
 
@@ -68,7 +76,7 @@ class SelectedImage with ChangeNotifier {
   }
 
   Future<void> downloadImage() async {
-    final uint8List = generateCompositeImage(bytesFromPicker!);
+    final uint8List = generateCompositeImage(modifiedBytes!);
     await WebImageDownloader.downloadImageFromUInt8List(uInt8List: uint8List);
   }
 }

@@ -4,6 +4,7 @@ import 'package:desktop_drop/desktop_drop.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'package:flutter_thumbnail_maker/providers/selected_image.dart';
 import 'package:flutter_thumbnail_maker/widgets/upcoming_feature_text.dart';
@@ -111,7 +112,11 @@ class _GenerateThumbnailWidgetState extends State<GenerateThumbnailWidget> {
         maxHeight: 720,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromRGBO(
+            context.watch<SelectedImage>().backgroundColor.r.toInt(),
+            context.watch<SelectedImage>().backgroundColor.g.toInt(),
+            context.watch<SelectedImage>().backgroundColor.b.toInt(),
+            1),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
@@ -385,11 +390,50 @@ class _SettingWidgetState extends State<SettingWidget> {
             children: [
               ElevatedButton(
                   onPressed: () {
-                    context
-                        .read<SelectedImage>()
-                        .imageResize(currentValue.toInt());
+                    // context
+                    //     .read<SelectedImage>()
+                    //     .setBackgroundColor(Colors.grey);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            title: const Text('색상 선택'),
+                            content: SingleChildScrollView(
+                              child: BlockPicker(
+                                pickerColor: Color.fromRGBO(
+                                    context
+                                        .watch<SelectedImage>()
+                                        .backgroundColor
+                                        .r
+                                        .toInt(),
+                                    context
+                                        .watch<SelectedImage>()
+                                        .backgroundColor
+                                        .g
+                                        .toInt(),
+                                    context
+                                        .watch<SelectedImage>()
+                                        .backgroundColor
+                                        .b
+                                        .toInt(),
+                                    1),
+                                onColorChanged: (pickerColor) {
+                                  print('pickerColor: $pickerColor');
+                                },
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('닫기'),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ]);
+                      },
+                    );
                   },
-                  child: Text('적용', style: TextStyle(fontSize: 30))),
+                  child: Text('배경색 설정', style: TextStyle(fontSize: 30))),
               ElevatedButton(
                   onPressed: () {
                     setState(() {
@@ -397,6 +441,13 @@ class _SettingWidgetState extends State<SettingWidget> {
                     });
                   },
                   child: Text('기본값', style: TextStyle(fontSize: 30))),
+              ElevatedButton(
+                  onPressed: () {
+                    context
+                        .read<SelectedImage>()
+                        .imageResize(currentValue.toInt());
+                  },
+                  child: Text('적용', style: TextStyle(fontSize: 30))),
             ],
           ),
         ],
