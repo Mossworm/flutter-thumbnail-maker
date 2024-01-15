@@ -1,16 +1,23 @@
-# flutter_thumbnail_maker
+# [Flutter] Thumbnail Maker
 
-A new Flutter project.
+![Untitled.png](./assets/Thumbnail.png)
 
-## Getting Started
+# ****Introdution****
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+This is a thumbnail maker I made to study flutter. It is a site for generating thumbnails for YouTube, blogs, etc. It is a website that allows you to set an image in the center of the screen and a surrounding background color that matches the image, and then export it as a png. Later, it will support adding text and various layouts and resolutions.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## **References**
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+[Create Beautiful Thumbnails For Vivaldi's Speed Dials](https://vivaldi-thumbnails.netlify.app/)
+
+## To-do Features
+
+
+- [x]  Import icon from local file
+- [x]  Icon-based color palettes
+- [x]  Importing icons from image URL
+- [ ]  Add TextCan
+- [ ]  setting resolution & layout
+- [ ]  Searching icons from no copyright
