@@ -19,6 +19,6 @@ This is a thumbnail maker I made to study flutter. It is a site for generating t
 - [x]  Import icon from local file
 - [x]  Icon-based color palettes
 - [x]  Importing icons from image URL
-- [ ]  Add TextCan
-- [ ]  setting resolution & layout
+- [ ]  Add Text
+- [ ]  Setting resolution & layout
 - [ ]  Searching icons from no copyright
