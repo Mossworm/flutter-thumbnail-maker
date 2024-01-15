@@ -480,7 +480,8 @@ class _SettingWidgetState extends State<SettingWidget> {
                       },
                     );
                   },
-                  child: const Text('배경색 설정', style: TextStyle(fontSize: 30))),
+                  child: const Text('Background Color',
+                      style: TextStyle(fontSize: 30))),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(100, 59),
@@ -492,7 +493,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                       currentValue = 300;
                     });
                   },
-                  child: const Text('기본값', style: TextStyle(fontSize: 30))),
+                  child: const Text('Default', style: TextStyle(fontSize: 30))),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(100, 59),
@@ -507,7 +508,7 @@ class _SettingWidgetState extends State<SettingWidget> {
                         .read<SelectedImage>()
                         .imageResize(currentValue.toInt());
                   },
-                  child: const Text('적용', style: TextStyle(fontSize: 30))),
+                  child: const Text('Apply', style: TextStyle(fontSize: 30))),
             ],
           ),
         ],
