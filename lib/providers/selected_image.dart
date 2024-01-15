@@ -23,7 +23,6 @@ class SelectedImage with ChangeNotifier {
 
   void setBackgroundColor(Color color) {
     _backgroundColor = img.ColorRgb8(color.red, color.green, color.blue);
-    print(_backgroundColor);
     notifyListeners();
   }
 
@@ -33,6 +32,24 @@ class SelectedImage with ChangeNotifier {
     imageResize(300);
     setPageType(PageType.none);
     notifyListeners();
+  }
+
+  Future<void> pickImageFromUrl(String url) async {
+    Image.network(url).image.resolve(const ImageConfiguration()).addListener(
+      ImageStreamListener(
+        (ImageInfo image, bool synchronousCall) async {
+          final ByteData? byteData =
+              await image.image.toByteData(format: ui.ImageByteFormat.png);
+          if (byteData != null) {
+            _bytesFromPicker = byteData.buffer.asUint8List();
+            _modifiedBytes = _bytesFromPicker;
+            imageResize(300);
+            setPageType(PageType.none);
+            notifyListeners();
+          }
+        },
+      ),
+    );
   }
 
   void setPageType(PageType pageType) {
@@ -49,8 +66,6 @@ class SelectedImage with ChangeNotifier {
   }
 
   Uint8List generateCompositeImage(Uint8List selectedImage) {
-    print('병합시 백그라운드 컬러: $backgroundColor');
-
     const int targetWidth = 1280;
     const int targetHeight = 720;
 
@@ -81,10 +96,5 @@ class SelectedImage with ChangeNotifier {
   Future<void> downloadImage() async {
     final uint8List = generateCompositeImage(modifiedBytes!);
     await WebImageDownloader.downloadImageFromUInt8List(uInt8List: uint8List);
-  }
-
-  Future<void> url_downloadImage(String _url) async {
-    print(_url);
-    await WebImageDownloader.downloadImageFromWeb(_url);
   }
 }

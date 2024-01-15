@@ -155,6 +155,11 @@ class AddIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            minimumSize: const Size(100, 59),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            )),
         onPressed: () {
           context.read<SelectedImage>().setPageType(PageType.pickImage);
         },
@@ -171,6 +176,11 @@ class GenerateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          minimumSize: const Size(100, 59),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          )),
       onPressed: () {
         context.read<SelectedImage>().downloadImage();
       },
@@ -275,7 +285,7 @@ class AddIconPage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Container(
-                                height: 40,
+                                height: 53,
                                 color: const Color.fromARGB(255, 235, 235, 235),
                                 child: TextField(
                                   controller: myController,
@@ -285,8 +295,18 @@ class AddIconPage extends StatelessWidget {
                                   ),
                                 )),
                           ),
+                          const SizedBox(width: 10),
                           ElevatedButton(
-                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(100, 58),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  )),
+                              onPressed: () {
+                                context
+                                    .read<SelectedImage>()
+                                    .pickImageFromUrl(myController.text);
+                              },
                               child: const Text('Select',
                                   style: TextStyle(fontSize: 20))),
                         ],
@@ -357,10 +377,16 @@ class _GetImageWidgetState extends State<GetImageWidget> {
                         color: Color.fromARGB(255, 98, 98, 98))),
                 const Text('or'),
                 ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(100, 35),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        )),
                     onPressed: () {
                       context.read<SelectedImage>().pickImageFromBytes();
                     },
-                    child: const Text('Select File')),
+                    child: const Text('Select File',
+                        style: TextStyle(fontSize: 15))),
               ],
             )),
             if (_dragging)
@@ -384,8 +410,8 @@ class SettingWidget extends StatefulWidget {
 class _SettingWidgetState extends State<SettingWidget> {
   double currentValue = 300.0;
 
-  Color pickerColor = Color.fromARGB(255, 255, 255, 255);
-  Color currentColor = Color.fromARGB(255, 255, 255, 255);
+  Color pickerColor = const Color.fromARGB(255, 255, 255, 255);
+  Color currentColor = const Color.fromARGB(255, 255, 255, 255);
 
   // ValueChanged<Color> callback
   void changeColor(Color color) {
@@ -423,6 +449,11 @@ class _SettingWidgetState extends State<SettingWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(100, 59),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -451,6 +482,11 @@ class _SettingWidgetState extends State<SettingWidget> {
                   },
                   child: const Text('배경색 설정', style: TextStyle(fontSize: 30))),
               ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(100, 59),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
                   onPressed: () {
                     setState(() {
                       currentValue = 300;
@@ -458,6 +494,11 @@ class _SettingWidgetState extends State<SettingWidget> {
                   },
                   child: const Text('기본값', style: TextStyle(fontSize: 30))),
               ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(100, 59),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
                   onPressed: () {
                     context
                         .read<SelectedImage>()

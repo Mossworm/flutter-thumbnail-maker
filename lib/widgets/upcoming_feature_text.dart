@@ -48,6 +48,16 @@ class UpcomingFeaturesTextWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Icon(Icons.check_box_outlined, size: 30, color: Colors.grey),
+                SizedBox(width: 10),
+                Text('Importing icons from image URL',
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 Icon(Icons.check_box_outline_blank,
                     size: 30, color: Colors.grey),
                 SizedBox(width: 10),
@@ -63,17 +73,6 @@ class UpcomingFeaturesTextWidget extends StatelessWidget {
                     size: 30, color: Colors.grey),
                 SizedBox(width: 10),
                 Text('Can setting resolution & layout',
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.check_box_outline_blank,
-                    size: 30, color: Colors.grey),
-                SizedBox(width: 10),
-                Text('Importing icons from image URL',
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ],
