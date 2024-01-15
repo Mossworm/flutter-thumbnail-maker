@@ -142,7 +142,7 @@ class _GenerateThumbnailWidgetState extends State<GenerateThumbnailWidget> {
               child: GenerateButton(),
             ),
           if (context.watch<SelectedImage>().pageType == PageType.pickImage)
-            const AddIconPage(), // 스택 위젯 추가
+            AddIconPage(), // 스택 위젯 추가
         ],
       ),
     );
@@ -218,7 +218,9 @@ class SelectedIconPage extends StatelessWidget {
 }
 
 class AddIconPage extends StatelessWidget {
-  const AddIconPage({super.key});
+  AddIconPage({super.key});
+
+  final myController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -265,6 +267,30 @@ class AddIconPage extends StatelessWidget {
                             },
                             icon: const Icon(Icons.close))
                       ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Container(
+                                height: 40,
+                                color: const Color.fromARGB(255, 235, 235, 235),
+                                child: TextField(
+                                  controller: myController,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Icon URL',
+                                  ),
+                                )),
+                          ),
+                          ElevatedButton(
+                              onPressed: () {},
+                              child: const Text('Select',
+                                  style: TextStyle(fontSize: 20))),
+                        ],
+                      ),
                     ),
                     const Expanded(child: GetImageWidget()),
                   ],

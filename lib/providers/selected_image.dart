@@ -82,4 +82,9 @@ class SelectedImage with ChangeNotifier {
     final uint8List = generateCompositeImage(modifiedBytes!);
     await WebImageDownloader.downloadImageFromUInt8List(uInt8List: uint8List);
   }
+
+  Future<void> url_downloadImage(String _url) async {
+    print(_url);
+    await WebImageDownloader.downloadImageFromWeb(_url);
+  }
 }

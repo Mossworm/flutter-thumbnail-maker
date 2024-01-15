@@ -38,8 +38,7 @@ class UpcomingFeaturesTextWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.check_box_outline_blank,
-                    size: 30, color: Colors.grey),
+                Icon(Icons.check_box_outlined, size: 30, color: Colors.grey),
                 SizedBox(width: 10),
                 Text('Icon-based color palettes',
                     style:
