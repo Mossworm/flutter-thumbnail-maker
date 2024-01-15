@@ -1,4 +1,4 @@
-# [Flutter] Thumbnail Maker
+# Flutter Thumbnail Maker
 
 ![Untitled.png](./assets/Thumbnail.png)
 [flutter_thumbnail_maker](https://flutter-thumbnail-maker.web.app/)
