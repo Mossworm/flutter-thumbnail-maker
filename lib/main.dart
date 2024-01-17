@@ -136,6 +136,10 @@ class _GenerateThumbnailWidgetState extends State<GenerateThumbnailWidget> {
             alignment: AlignmentDirectional(-0.9, 0.9),
             child: AddIconButton(),
           ),
+          const Align(
+            alignment: AlignmentDirectional(-0.6, 0.9),
+            child: AddTextButton(),
+          ),
           if (context.watch<SelectedImage>().bytesFromPicker != null)
             const Align(
               alignment: AlignmentDirectional(0.9, 0.9),
@@ -143,6 +147,8 @@ class _GenerateThumbnailWidgetState extends State<GenerateThumbnailWidget> {
             ),
           if (context.watch<SelectedImage>().pageType == PageType.pickImage)
             AddIconPage(), // 스택 위젯 추가
+          if (context.watch<SelectedImage>().pageType == PageType.addText)
+            AddTextPage(), // 스택 위젯 추가
         ],
       ),
     );
@@ -165,6 +171,27 @@ class AddIconButton extends StatelessWidget {
         },
         child: const Text(
           'Add Icon',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ));
+  }
+}
+
+class AddTextButton extends StatelessWidget {
+  const AddTextButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            minimumSize: const Size(100, 59),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            )),
+        onPressed: () {
+          context.read<SelectedImage>().setPageType(PageType.addText);
+        },
+        child: const Text(
+          'Add Text',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ));
   }
@@ -216,9 +243,14 @@ class EmptyPage extends StatelessWidget {
 }
 
 // 아이콘이 설정된 페이지
-class SelectedIconPage extends StatelessWidget {
+class SelectedIconPage extends StatefulWidget {
   const SelectedIconPage({super.key});
 
+  @override
+  State<SelectedIconPage> createState() => _SelectedIconPageState();
+}
+
+class _SelectedIconPageState extends State<SelectedIconPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -324,6 +356,115 @@ class AddIconPage extends StatelessWidget {
   }
 }
 
+class AddTextPage extends StatelessWidget {
+  AddTextPage({super.key});
+
+  final myController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    if (context.watch<SelectedImage>().addTextString != null) {
+      myController.text = context.watch<SelectedImage>().addTextString!;
+    }
+
+    return GestureDetector(
+      onTap: () {
+        context.read<SelectedImage>().setPageType(PageType.none);
+      },
+      child: Container(
+        color: const Color.fromARGB(255, 98, 98, 98).withOpacity(0.6),
+        child: Center(
+          child: GestureDetector(
+            onTap: () {},
+            child: Container(
+              constraints: const BoxConstraints(
+                maxWidth: 500,
+                maxHeight: 200,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Add Text',
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold)),
+                        IconButton(
+                            onPressed: () {
+                              context
+                                  .read<SelectedImage>()
+                                  .setPageType(PageType.none);
+                            },
+                            icon: const Icon(Icons.close))
+                      ],
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                  height: 100,
+                                  color:
+                                      const Color.fromARGB(255, 235, 235, 235),
+                                  child: TextField(
+                                    keyboardType: TextInputType.multiline,
+                                    minLines: 3,
+                                    maxLines: 3,
+                                    controller: myController,
+                                    decoration: const InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Text',
+                                    ),
+                                  )),
+                            ),
+                            const SizedBox(width: 10),
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(100, 58),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    )),
+                                onPressed: () {
+                                  context
+                                      .read<SelectedImage>()
+                                      .setAddText(myController.text);
+                                  context
+                                      .read<SelectedImage>()
+                                      .setPageType(PageType.none);
+                                },
+                                child: const Text('Add',
+                                    style: TextStyle(fontSize: 20))),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class GetImageWidget extends StatefulWidget {
   const GetImageWidget({super.key});
 
@@ -413,16 +554,23 @@ class _SettingWidgetState extends State<SettingWidget> {
   Color pickerColor = const Color.fromARGB(255, 255, 255, 255);
   Color currentColor = const Color.fromARGB(255, 255, 255, 255);
 
+  Color pickerTextColor = const Color.fromARGB(255, 255, 255, 255);
+  Color currentTextColor = const Color.fromARGB(255, 255, 255, 255);
+
   // ValueChanged<Color> callback
   void changeColor(Color color) {
     setState(() => pickerColor = color);
+  }
+
+  void changeTextColor(Color color) {
+    setState(() => pickerTextColor = color);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
-        maxWidth: 700,
+        maxWidth: 1280,
         maxHeight: 200,
       ),
       decoration: BoxDecoration(
@@ -439,12 +587,15 @@ class _SettingWidgetState extends State<SettingWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Slider(
-              value: currentValue,
-              max: 600,
-              onChanged: (value) => setState(() {
-                    currentValue = value;
-                  })),
+          Container(
+            width: 600,
+            child: Slider(
+                value: currentValue,
+                max: 600,
+                onChanged: (value) => setState(() {
+                      currentValue = value;
+                    })),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -489,6 +640,40 @@ class _SettingWidgetState extends State<SettingWidget> {
                         borderRadius: BorderRadius.circular(5),
                       )),
                   onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('색상 선택'),
+                          content: SingleChildScrollView(
+                              child: ColorPicker(
+                            pickerColor: pickerTextColor,
+                            onColorChanged: changeTextColor,
+                          )),
+                          actions: <Widget>[
+                            ElevatedButton(
+                              child: const Text('Got it'),
+                              onPressed: () {
+                                setState(() {
+                                  currentTextColor = pickerTextColor;
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child:
+                      const Text('Text Color', style: TextStyle(fontSize: 30))),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(100, 59),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      )),
+                  onPressed: () {
                     setState(() {
                       currentValue = 300;
                     });
@@ -504,6 +689,9 @@ class _SettingWidgetState extends State<SettingWidget> {
                     context
                         .read<SelectedImage>()
                         .setBackgroundColor(currentColor);
+                    context
+                        .read<SelectedImage>()
+                        .setTextColor(currentTextColor);
                     context
                         .read<SelectedImage>()
                         .imageResize(currentValue.toInt());
