@@ -32,7 +32,7 @@ class SelectedImage with ChangeNotifier {
   img.ColorRgb8 _backgroundColor = img.ColorRgb8(255, 255, 255);
   img.ColorRgb8 get backgroundColor => _backgroundColor;
 
-  img.ColorRgb8 _textColor = img.ColorRgb8(255, 255, 255);
+  img.ColorRgb8 _textColor = img.ColorRgb8(0, 0, 0);
   img.ColorRgb8 get textColor => _textColor;
 
   void setBackgroundColor(Color color) {

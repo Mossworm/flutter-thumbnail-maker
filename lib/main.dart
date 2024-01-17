@@ -554,8 +554,8 @@ class _SettingWidgetState extends State<SettingWidget> {
   Color pickerColor = const Color.fromARGB(255, 255, 255, 255);
   Color currentColor = const Color.fromARGB(255, 255, 255, 255);
 
-  Color pickerTextColor = const Color.fromARGB(255, 255, 255, 255);
-  Color currentTextColor = const Color.fromARGB(255, 255, 255, 255);
+  Color pickerTextColor = const Color.fromARGB(255, 0, 0, 0);
+  Color currentTextColor = const Color.fromARGB(255, 0, 0, 0);
 
   // ValueChanged<Color> callback
   void changeColor(Color color) {
